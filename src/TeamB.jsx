@@ -16,7 +16,6 @@ class TeamA extends Component {
       Amount: '',
       InputAmount: '',
       weiConversion : 1000000000000000000,
-
       friendAddress: '',
       team1: '',
       team2: '',
@@ -24,7 +23,7 @@ class TeamA extends Component {
     }
 
     // this.getAmount = this.getAmount.bind(this);
-    // this.Bet = this.Bet.bind(this);
+    this.load = this.load.bind(this);
     // this.MakeWin = this.MakeWin.bind(this);
     // this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -52,55 +51,23 @@ class TeamA extends Component {
 
 
 
-  getAmount(web3){
-    //Get the contract
-//     const contract = require('truffle-contract');
-//     const Betting = contract(BettingContract);
-//     Betting.setProvider(web3.currentProvider);
-//     var BettingInstance;
-//     web3.eth.getAccounts((error, accounts) => {
-//     Betting.deployed().then((instance) => {
 
-//       //Instantiate the contract in a promise
-//       BettingInstance = instance
-
-//     }).then((result) => {
-//       //Calling the AmountOne function of the smart-contract
-//     //   return BettingInstance.AmountOne.call({from: accounts[0]})
-//     }).then((result) => {
-//       //Then the value returned is stored in the Amount state var.
-//       //Divided by 10000 to convert in ether.
-//       this.setState({
-//         Amount : result.c / 10000
-//       })
-//     });
-//   })
-  }
-
-//   handleInputChange(e) {
-//     this.setState({InputAmount: e.target.value*this.state.weiConversion});
-//   }
-
-    clickME(){
-        console.log("I have been clicked")
-    }
-
-  Bet(){
-    const contract = require('truffle-contract');
-    const Betting = contract(BettingContract);
-    Betting.setProvider(this.state.web3.currentProvider);
-    var BettingInstance;
-    this.state.web3.eth.getAccounts((error, accounts) => {
-        Betting.deployed().then((instance) => {
-          BettingInstance = instance
-        }).then((result) => {
-          // Get the value from the contract to prove it worked.
-          return BettingInstance.bet(1, {from: accounts[0],
-          value: this.state.InputAmount})
-        }).catch(() => {
-          console.log("Error with betting")
-        })
-      })
+  laod(){
+    // const contract = require('truffle-contract');
+    // const Betting = contract(BettingContract);
+    // Betting.setProvider(this.state.web3.currentProvider);
+    // var BettingInstance;
+    // this.state.web3.eth.getAccounts((error, accounts) => {
+    //     Betting.deployed().then((instance) => {
+    //       BettingInstance = instance
+    //     }).then((result) => {
+    //       // Get the value from the contract to prove it worked.
+    //       return BettingInstance.bet(1, {from: accounts[0],
+    //       value: this.state.InputAmount})
+    //     }).catch(() => {
+    //       console.log("Error with betting")
+    //     })
+    //   })
   }
 
   MakeWin(){
@@ -125,18 +92,19 @@ class TeamA extends Component {
   render(){
         return(
           <div>
-            <h3>Create a bet</h3>
-            <h4> Total amount : {this.state.Amount} ETH</h4>
+            <h3>Accept a Wager</h3>
             <hr/>
-            <h5> Enter an Address of recipient</h5>
+            <h5> Enter an Address of Wager Contract</h5>
             <div className="input-group">
                 <span className="input-group-addon">@</span>
                 <input type="text" className="form-control" onChange={this.clickME} /> 
             </div>                         
             <br/>
-            <button onClick={this.Bet}>Accept Bet</button>
+            <button onClick={this.Bet}>View wager Details</button>
             <br/>
             <hr/>
+            <button onClick={this.Bet}>Accept wager</button>
+            <br/>
           </div>
         )
 
