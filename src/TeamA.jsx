@@ -21,7 +21,7 @@ class TeamA extends Component {
       friendAddress: '',
       team1: '',
       team2: '',
-	  contractAddress: 'f'
+	  contractAddress: ''
 
     }
 	
@@ -101,10 +101,10 @@ class TeamA extends Component {
 			gasPrice: '300000000'
 			
 		})
-		.then(function(newContractInstance){
+		.then((newContractInstance) => {
 			console.log(newContractInstance.options.address)
 			// contractAddress = " " + newContractInstance.options.address
-			// this.setState({contractAddress: newContractInstance.options.address});
+			this.setState({contractAddress: newContractInstance.options.address});
 			// this.contractAddress = newContractInstance.options.address;
 		});
 		
@@ -173,7 +173,7 @@ handleInputChangeTeam2(e) {
              <br/>
 			 <hr/>
             <h3> Latest Deployed Contract:</h3>
-			<p>Address: {this.state.InputAmount}</p>
+			<p>Address: {this.state.contractAddress}</p>
           </div>
         )
 

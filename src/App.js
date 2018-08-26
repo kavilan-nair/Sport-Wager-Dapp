@@ -38,10 +38,10 @@ render() {
       <div className="App">
 <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Bet-eth</h1>
+          <h1 className="App-title">Football - Wager </h1>
         </header>
         <div>
-          Welcome on my Ethereum Betting website <br/>
+        <br/>
         Your Wallet address is {this.state.address}
         </div>
         {/*We define a grid*/}

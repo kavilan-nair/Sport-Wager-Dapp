@@ -16,14 +16,19 @@ class TeamA extends Component {
       Amount: '',
       InputAmount: '',
       weiConversion : 1000000000000000000,
-      friendAddress: '',
-      team1: '',
-      team2: '',
-
+      wagerAddress: '',
+      better1: "",
+      better2: '',
+      betAmount1: '',
+      betAmount2: '',
+      teamName1: '',
+      teamName2: ''
     }
 
     // this.getAmount = this.getAmount.bind(this);
-    this.load = this.load.bind(this);
+    this.getContract = this.getContract.bind(this);
+    this.acceptWager = this.acceptWager.bind(this);
+    this.handleInputChangeAddress = this.handleInputChangeAddress.bind(this);
     // this.MakeWin = this.MakeWin.bind(this);
     // this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -49,25 +54,61 @@ class TeamA extends Component {
     })
   }
 
+  getContract(){
+    if (this.state.wagerAddress !== ''){
+      let ABI_ARRAY = [{"constant":true,"inputs":[],"name":"better2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalPot","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptBet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_winningTeamID","type":"uint256"}],"name":"getWinner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"teamName2","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"teamName1","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"betters","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getBetAmount2","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getBetAmount1","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"betAmount2","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"betAmount1","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"minimumBet","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"better1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"betterDetails","outputs":[{"name":"betAmount","type":"uint256"},{"name":"selectedTeam","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_better2","type":"address"},{"name":"_teamName1","type":"string"},{"name":"_teamName2","type":"string"}],"payable":true,"stateMutability":"payable","type":"constructor"}]
+      // let temp = this.state.web3.eth.contract(ABI_ARRAY).at(0xbaAA2a3237035A2c7fA2A33c76B44a8C6Fe18e87);
+      var contract = new this.state.web3.eth.Contract(ABI_ARRAY, this.state.wagerAddress)
+      contract.methods.better1().call().then((result) => {
+        console.log(result)
+          this.setState({
+            better1: result
+          });
+      });
 
+      contract.methods.better2().call().then((result) => {
+        console.log(result)
+          this.setState({
+            better2: result
+          });
+      });
 
+      contract.methods.betAmount1().call().then((result) => {
+        console.log(result)
+          this.setState({
+            betAmount1: parseFloat(result) 
+          });
+      });
 
-  laod(){
-    // const contract = require('truffle-contract');
-    // const Betting = contract(BettingContract);
-    // Betting.setProvider(this.state.web3.currentProvider);
-    // var BettingInstance;
-    // this.state.web3.eth.getAccounts((error, accounts) => {
-    //     Betting.deployed().then((instance) => {
-    //       BettingInstance = instance
-    //     }).then((result) => {
-    //       // Get the value from the contract to prove it worked.
-    //       return BettingInstance.bet(1, {from: accounts[0],
-    //       value: this.state.InputAmount})
-    //     }).catch(() => {
-    //       console.log("Error with betting")
-    //     })
-    //   })
+      contract.methods.teamName1().call().then((result) => {
+        console.log(result)
+          this.setState({
+            teamName1: result
+          });
+      });
+
+      contract.methods.teamName2().call().then((result) => {
+        console.log(result)
+          this.setState({
+            teamName2: result
+          });
+      });
+    }
+  }
+  acceptWager(){
+      let ABI_ARRAY = [{"constant":true,"inputs":[],"name":"better2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalPot","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptBet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_winningTeamID","type":"uint256"}],"name":"getWinner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"teamName2","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"teamName1","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"betters","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getBetAmount2","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getBetAmount1","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"betAmount2","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"betAmount1","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"minimumBet","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"better1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"betterDetails","outputs":[{"name":"betAmount","type":"uint256"},{"name":"selectedTeam","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_better2","type":"address"},{"name":"_teamName1","type":"string"},{"name":"_teamName2","type":"string"}],"payable":true,"stateMutability":"payable","type":"constructor"}]
+      // let temp = this.state.web3.eth.contract(ABI_ARRAY).at(0xbaAA2a3237035A2c7fA2A33c76B44a8C6Fe18e87);
+      var contract = new this.state.web3.eth.Contract(ABI_ARRAY, this.state.wagerAddress)
+      console.log(this.state.betAmount1)
+      contract.methods.acceptBet().send({
+        from: this.state.better2,
+        gas: 1500000,
+        value: this.state.betAmount1
+      })
+  }
+
+  handleInputChangeAddress(e) {
+    this.setState({wagerAddress: e.target.value});
   }
 
   MakeWin(){
@@ -97,13 +138,18 @@ class TeamA extends Component {
             <h5> Enter an Address of Wager Contract</h5>
             <div className="input-group">
                 <span className="input-group-addon">@</span>
-                <input type="text" className="form-control" onChange={this.clickME} /> 
+                <input type="text" className="form-control" onChange={this.handleInputChangeAddress} /> 
             </div>                         
             <br/>
-            <button onClick={this.Bet}>View wager Details</button>
+            <button onClick={this.getContract.bind(this)}>View wager Details </button>
             <br/>
+            <h5> Better 1: {this.state.better1}</h5>
+            <h5> Better 2: {this.state.better2}</h5>
+            <h5> Bet Amount: {this.state.betAmount1 / this.state.weiConversion}</h5>
+            <h5> Team 1: {this.state.teamName1}</h5>
+            <h5> Team 2: {this.state.teamName2}</h5>
             <hr/>
-            <button onClick={this.Bet}>Accept wager</button>
+            <button onClick={this.acceptWager}>Accept wager</button>
             <br/>
           </div>
         )
