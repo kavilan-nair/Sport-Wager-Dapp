@@ -22,7 +22,8 @@ class TeamA extends Component {
       betAmount1: '',
       betAmount2: '',
       teamName1: '',
-      teamName2: ''
+      teamName2: '',
+      totalPot: '',
     }
 
     // this.getAmount = this.getAmount.bind(this);
@@ -94,6 +95,13 @@ class TeamA extends Component {
           });
       });
     }
+    contract.methods.totalPot().call().then((result) => {
+        console.log(result)
+          this.setState({
+            totalPot: result
+          });
+      });
+    
   }
   acceptWager(){
       let ABI_ARRAY = [{"constant":true,"inputs":[],"name":"better2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalPot","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptBet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_winningTeamID","type":"uint256"}],"name":"getWinner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"teamName2","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"teamName1","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"betters","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getBetAmount2","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getBetAmount1","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"betAmount2","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"betAmount1","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"minimumBet","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"better1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"betterDetails","outputs":[{"name":"betAmount","type":"uint256"},{"name":"selectedTeam","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_better2","type":"address"},{"name":"_teamName1","type":"string"},{"name":"_teamName2","type":"string"}],"payable":true,"stateMutability":"payable","type":"constructor"}]
@@ -148,6 +156,7 @@ class TeamA extends Component {
             <h5> Bet Amount: {this.state.betAmount1 / this.state.weiConversion}</h5>
             <h5> Team 1: {this.state.teamName1}</h5>
             <h5> Team 2: {this.state.teamName2}</h5>
+            <h5> Pot: {this.state.totalPot}</h5>
             <hr/>
             <button onClick={this.acceptWager}>Accept wager</button>
             <br/>
