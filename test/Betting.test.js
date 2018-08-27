@@ -27,11 +27,10 @@ contract("Betting", accounts => {
             teamName1.should.be.equal(_teamName1)
             const teamName2 = await betting.teamName2()
             teamName2.should.be.equal(_teamName2)
-            //  await assertRevert(stakeFund.proposeNewAddress(_owner1, _newOwner, {from: _attacker}))
         })
     })
 
-     describe('Accept Bet', () => {
+    describe('Accept Bet', () => {
         it('The desired other better should be allowed to accept the bet', async () => {          
             await betting.acceptBet({ from: _better2, value: web3.toWei(1, 'ether') })
             const betAmount1 = await betting.betAmount1();
@@ -47,18 +46,24 @@ contract("Betting", accounts => {
         })
     })
 
+    describe('Set Winner', () => {
+        it('Ether should be paid out correctly', async () => {          
+            await betting.getWinner(1, { from: _better1 })
+            const winner = await betting.winner();
+            winner.should.be.equal(_better1);
+        })
+    })
 
-    // Test to see if the the emergency stop functions can be called 
-    describe('The creator of the contract should be able to  call emergency stop', () => {
-        it('Emergency stop Contract ', async () => {    
+    describe('Emergency Stop', () => {
+        it('The creator of the contract should be able to  call emergency stop ', async () => {    
             betting.stopContract({from: _better1})
             const isStopped = await betting.isStopped()
             isStopped.should.be.equal(true)
         })
     })
 
-        describe('The creator of the contract should be able to  call resume on emergency stop', () => {
-        it('Emergency stop Contract ', async () => {    
+    describe('Emergency Brake', () => {
+        it('The creator of the contract should be able to  call resume on emergency stop ', async () => {    
             betting.resumeContract({from: _better1})
             const isStopped = await betting.isStopped()
             isStopped.should.be.equal(false)
@@ -66,24 +71,24 @@ contract("Betting", accounts => {
     })
 
 
-    describe('An attacker should not be able to accept the bet', () => {
-        it('The desired other better should be allowed to accept the bet', async () => {          
+    describe('Attacker accepting bet', () => {
+        it('An attacker should not be allowed to accept bet', async () => {          
             await assertRevert(betting.acceptBet({ from: _attacker, value: web3.toWei(1, 'ether') }))
         })
     })
 
-    describe('An attacker should not be able to access the Emergency stop  ', () => {
-        it('The desired other better should be allowed to accept the bet', async () => {          
+    describe('Attacker emergency stop ', () => {
+        it('The attacker should not be able to call the stop contract function', async () => {          
             await assertRevert(betting.stopContract({ from: _attacker}))
         })
     })
-    describe('An attacker should not be able to resume in the Emergency stop  ', () => {
-        it('The desired other better should be allowed to accept the bet', async () => {          
+    describe('Atteack emergency stop resume  ', () => {
+        it('The attacker should not be able to call the resume function', async () => {          
             await assertRevert(betting.resumeContract({ from: _attacker}))
         })
     })
     describe('Emergency withdraw', () => {
-        it('The desired other better should be allowed to accept the bet', async () => {          
+        it('Emergency withdraw should not be callable by the attacker', async () => {          
             await assertRevert(betting.emergencyWithdraw({ from: _attacker}))
         })
     })

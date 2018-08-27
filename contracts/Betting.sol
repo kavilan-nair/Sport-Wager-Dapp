@@ -6,7 +6,7 @@ pragma solidity ^0.4.20;
 * not been implemented at this stage. 
 *  @author Kavilan Nair - TripleBlatkCar
 */
-contract TeamBet{
+contract Betting{
     
     /** @dev store the amount that is bet bet by the first better **/
     uint public betAmount1;
