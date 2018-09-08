@@ -44,6 +44,7 @@ class TeamA extends Component {
      results.web3.eth.getAccounts( (error,acc) => {
        //this.setState is used to edit the state variables
        this.setState({
+        address: acc[0],
          web3: results.web3
        })
      });
@@ -58,6 +59,7 @@ class TeamA extends Component {
      console.log('Error finding web3.')
    })
  }
+
 
   getContractAddress(e){
     console.log(contractAddress)
@@ -90,7 +92,7 @@ class TeamA extends Component {
       arguments: [_better2, _teamName1, _teamName2]
     })
     .send({
-      from: '0x627306090abaB3A6e1400e9345bC60c78a8BEf57',
+      from: this.state.address,
       value: _amount*this.state.weiConversion,
       gas: 1500000,
       gasPrice: '300000000'
